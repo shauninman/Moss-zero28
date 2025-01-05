@@ -1,3 +1,5 @@
 # Moss for the MagicX Mini Zero 28
 
-MagicX doesn't provide an official Linux-based firmware but has provided community devs with the source to build their own for the Allwinner A133P. This repo contains notes and changes to apply to the default build.
+MagicX doesn't provide an official Linux-based firmware but has provided community devs with the source to build their own (Tina Linux!) for the Allwinner A133P. This repo contains notes and changes to apply to the default build. It does not contain proprietary Allwinner source.
+
+The changes are simple and mirror the changes Trimui and Miyoo make to their custom versions of Tina Linux. It adds a `magicx` folder to `/usr` that contains `bin/runmagicx.sh` (which is called from `/etc/rc.local` at the end of boot) and `lib/libSDL2*.so`, blobs pulled from the Trimui Smart Pro (another A133 device). Once flashed this card mounts the second card at `/mnt/SDCARD/` and will look first for `magicx/init.sh` then fallback to `.tmp_update/updater` (again, mirroring Trimui and Miyoo behavior) and poweroff if neither is present.
