@@ -1,0 +1,120 @@
+build:
+
+cd ~/lichee
+source build/envsetup.sh
+lunch
+3
+make -j8
+pack
+
+---
+
+to start over:
+
+../
+rm -rf lichee
+tar -xf mplus_a133_tina_v1.0.tar.gz
+
+---
+
+copying over a config to .config and running make or make menuconfig or any of the make *config's renableds a bunch of disabled options so this needs to be done manually each time you build from scratch (eg. like whenever your host kernel panics or the container drops the connection :sob:).
+
+to build from scratch:
+
+	disable all the things
+	build once
+	enable updated toolchain
+	build again
+
+PHASE I
+enable
+	Base System
+		busybox
+			unzip
+disable (in disable order, not display order)
+	TestUnit > testunit
+	TestTools > tinatest
+	GUI > Minigui
+		mg-samples (then everything else)
+	GUI > Qt > 
+		ococci-daemon
+		ococci-launcher (then everything else)
+	GUI > Libs
+		libcairo
+		libchipmunk
+		libpixman
+	Allwinner >
+		btmanager > 
+			*-demo
+			*-core
+		smartlinkd >
+			(all from bottom)
+		tina_multimedia_demo
+			(all)
+		MtpDaemon
+		benchmarks
+		camerademo
+		libcedarx
+		libAWIspApi
+		libsec_key
+		swupdate
+		ota-burnboot
+	Base system
+		opkg
+	Multimedia
+		live
+		bluez-alsa
+		fdk-aac
+	Utilities
+		bluez-daemon
+		bluez-utils
+		bluez-utils-extra
+		bcrm_patchram_plus
+		cpu_monitor
+		fbtest
+		fontconfig
+		iozone3
+		memtester
+		stress
+		Filesystem (maybe?)
+			ntfsprogs_ntfs-3g
+			ntfs-3g
+		rf test tool
+			aw869-rftest
+	Libraries
+		SSL
+			libnss
+		bluez-libs
+		libflacc
+		libical
+		libogg
+		libopus
+		libtheora
+		libv4l
+		libvorbis
+		libvpx
+		nspr
+		x264
+
+PHASE II
+enable
+	Advanced configuration options (for developers)
+		Update toolchain
+		Toolchain Options
+			Binutils 
+				2.28
+			GCC Compiler Version
+				7.4.1
+			C Library implementation
+				glibc
+			glibc version
+				2.29
+			gdb (disable)
+	
+
+---
+
+before building
+	~/workspace/assets/install.sh
+after building run 
+	add-rootfs-demo
