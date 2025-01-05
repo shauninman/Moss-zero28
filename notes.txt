@@ -1,4 +1,4 @@
-build:
+building Tina Linux (from source, not provided in this repo):
 
 cd ~/lichee
 source build/envsetup.sh
@@ -6,6 +6,12 @@ lunch
 3
 make -j8
 pack
+
+--
+
+convert the proprietary allwinner image to a standard flashable image file with OpenixCard:
+
+	https://github.com/YuzukiTsuru/OpenixCard
 
 ---
 
@@ -17,7 +23,7 @@ tar -xf mplus_a133_tina_v1.0.tar.gz
 
 ---
 
-copying over a config to .config and running make or make menuconfig or any of the make *config's renableds a bunch of disabled options so this needs to be done manually each time you build from scratch (eg. like whenever your host kernel panics or the container drops the connection :sob:).
+copying over a config to .config and running make or make menuconfig or any of the make *config's reenables a bunch of disabled options so this needs to be done manually each time you build from scratch (eg. like whenever your host kernel panics or the container drops the connection :sob:).
 
 to build from scratch:
 
