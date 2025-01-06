@@ -37,22 +37,22 @@ enable
 	Base System
 		busybox
 			unzip
-disable (in disable order, not display order)
+disable (in disable order, not display order, because dependencies)
 	TestUnit > testunit
 	TestTools > tinatest
 	GUI > Minigui
-		mg-samples (then everything else)
+		mg-samples (then everything else as it becomes available)
 	GUI > Qt > 
 		ococci-daemon
-		ococci-launcher (then everything else)
+		ococci-launcher (then everything else as it becomes available)
 	GUI > Libs
 		libcairo
 		libchipmunk
 		libpixman
 	Allwinner >
 		btmanager > 
-			*-demo
-			*-core
+			btmanager-demo
+			btmanager-core
 		smartlinkd >
 			(all from bottom)
 		tina_multimedia_demo
