@@ -1,3 +1,9 @@
+changes (not present in configs)
+	enabled iso8859-1 and utf8
+	disabled sunxi-vin
+
+---
+
 building Tina Linux (from source, not provided in this repo):
 
 cd ~/lichee
@@ -5,6 +11,8 @@ source build/envsetup.sh
 lunch
 3
 make -j8
+~/workspace/assets/install.sh 
+add-rootfs-demo
 pack
 
 --
@@ -27,12 +35,26 @@ copying over a config to .config and running make or make menuconfig or any of t
 
 to build from scratch:
 
-	disable all the things
+	phase 1 (disable a bunch, enable select items)
 	build once
-	enable updated toolchain
+	phase 2 (enable updated toolchain)
 	build again
+	add-rootfs-demo
+	pack
+	OpenixCard
 
 PHASE I
+make kernel_menuconfig
+enable
+	File systems
+		Native language support
+			NLS ISO 8859-1
+			NLS UTF-8
+		DOS/FAT/NT Filesystems
+			Default iocharset for FAT
+				"utf8"
+	
+make menuconfig
 enable
 	Base System
 		busybox
@@ -67,6 +89,9 @@ disable (in disable order, not display order, because dependencies)
 		ota-burnboot
 	Base system
 		opkg
+	Kernel modules
+		Video
+			kmod-sunxi-vin
 	Multimedia
 		live
 		bluez-alsa
@@ -82,7 +107,7 @@ disable (in disable order, not display order, because dependencies)
 		iozone3
 		memtester
 		stress
-		Filesystem (maybe?)
+		Filesystem
 			ntfsprogs_ntfs-3g
 			ntfs-3g
 		rf test tool
@@ -117,6 +142,69 @@ enable
 				2.29
 			gdb (disable)
 	
+PHASE III (hook into earlier phase if possible)
+enable
+	Target Images
+		downsize the kernel size (EXPERIMENTAL) 
+disable
+	Utilities
+		getevent
+		dbus
+		dbus-utils
+		Enable aw869b extra config
+		Filesystem
+			ntfs-g3 (and related)
+	Network
+		wpa-supplicant
+		wpa-cli
+		uclient-fetch
+		iperf
+	Libraries
+		uclibcxx
+		sbc
+		libuclient
+		libsocket_db
+		libsndfile
+		liboil
+		libinput
+		libgcrypt
+		libgpg-error
+		libexpat
+		libdbus
+		libconfig
+		gnome
+			(everything)
+		libffi
+		libxml2
+		mtdev
+	Kernel modules
+		Crytographic API modules
+			(everything)
+		Libraries
+			kmod-lib-crc16
+		Wireless Drivers
+			(everything)
+	Firmware
+		aw869b-firmware
+	Development
+		gdb
+	Allwinner
+		wifimanager
+		softap
+		resample
+		Libraries
+			libcutils
+	Base system
+		usign
+		uci
+		mtd
+		logd
+		dnsmasq
+	Network
+		hostapd
+		iw
+		Firewall
+			iptables	
 
 ---
 
